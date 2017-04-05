@@ -1,0 +1,158 @@
+MSC Nastran V2016.1 (Intel Linux 3.16.0-4-amd64) Control File:
+-----------------------------------------------------------------
+Nastran BUFFSIZE=8193 $(/cae/apps/data/msc-2016/nastran/conf/nast20161rc[4])
+$ $(/cae/apps/data/msc-2016/nastran/conf/nast20161rc[6])
+$ $(/cae/apps/data/msc-2016/nastran/conf/nast20161rc[13])
+$ End $(/cae/apps/data/msc-2016/nastran/conf/nast20161rc[14])
+JID=./fetch15.dat
+OUT=./fetch15
+PWDDIR=/userspace/c/cavalcanti/Spring 2017/EMA 610/HW1b/beam15
+MEM=1050476544      $ WORDS
+MACH='Intel'
+OPER='Linux'
+OSV='3.16.0-4-amd64'
+MODEL='3200 MHz (tux-101)'
+CONFIG=186640
+NPROC=4
+symbol=DELDIR='/cae/apps/data/msc-2016/nastran/msc20161/nast/del' $(program default)
+symbol=DEMODIR='/cae/apps/data/msc-2016/nastran/msc20161/nast/demo' $(program default)
+symbol=SSSALTERDIR='/cae/apps/data/msc-2016/nastran/msc20161/nast/sssalter' $(program default)
+symbol=TPLDIR='/cae/apps/data/msc-2016/nastran/msc20161/nast/tpl' $(program default)
+SDIR=/tmp/fetch15.T12300_55
+DBS=./fetch15
+SCR=no
+SMEM=100
+BPOOL=2003.6MB
+DMPMEM=estimate
+NEWDEL=/cae/apps/data/msc-2016/nastran/msc20161/linux64_rhe63i8/SSS
+DEL=MSCDEF
+DML=MSCDEF
+SDL=MSCDEF
+AUTH=27500@msc.license.cae.wisc.edu
+AUTHQUE=20
+MSGCAT=/cae/apps/data/msc-2016/nastran/msc20161/linux64_rhe63i8/analysis.msg
+MSGDEST='f06'
+NEWS=/cae/apps/data/msc-2016/nastran/msc20161/nast/news.txt
+-----------------------------------------------------------------
+MSC_ISHELLPATH=/cae/apps/data/msc-2016/nastran//msc20161/actran/linux64/Actran_16.1.b.92885/bin:
+MSC_JIDPATH=
+PATH=/cae/apps/data/msc-2016/nastran/msc20161/linux64_rhe63i8:/cae/apps/data/msc-2016/nastran/msc20161/linux64_rhe63i8:/usr/local/bin:/usr/bin:/bin:/usr/bin/X11:/opt/bin:/cae/apps/data/msc-2016/nastran/msc20161/linux64_rhe63i8:/cae/apps/bin
+LD_LIBRARY_PATH=/cae/apps/data/msc-2016/nastran/msc20161/linux64_rhe63i8/lib:/cae/apps/data/msc-2016/nastran/msc20161/linux64_rhe63i8:/cae/apps/data/msc-2016/nastran/msc20161/linux64_rhe63i8/nvidia:/cae/apps/data/msc-2016/nastran/msc20161/linux64_rhe63i8/lib:/cae/apps/data/msc-2016/nastran/msc20161/linux64_rhe63i8:/cae/apps/data/msc-2016/nastran/msc20161/linux64_rhe63i8/nCode/bin:/cae/apps/data/msc-2016/lib
+SCA_SERVICE_CATALOG=/cae/apps/data/msc-2016/nastran/msc20161/res/SCAServiceCatalog.xml
+SCA_RESOURCE_DIR=/cae/apps/data/msc-2016/nastran/msc20161/res
+Cmd Line:    /cae/apps/data/msc-2016/nastran/msc20161/linux64_rhe63i8/nastran fetch15.dat
+Current Dir: /userspace/c/cavalcanti/Spring 2017/EMA 610/HW1b/beam15
+Time Cmd:    time 
+Executable:  /cae/apps/data/msc-2016/nastran/msc20161/linux64_rhe63i8/analysis
+Arch= Kywd:  [Not specified]
+MSC_MSG:     stderr
+-----------------------------------------------------------------
+Current resource limits:
+ CPU time:                       unlimited
+ Virtual address space:          unlimited
+ Working set size:               unlimited
+ Data segment size:              unlimited
+ Stack size:                          8192 KB
+ Number of open files:                1024 (hard limit: 1024)
+ File size:                      unlimited
+ Core dump file size:                    2 MB (hard limit: 64 MB)
+-----------------------------------------------------------------
+System configuration:
+ Hostname:         tux-101.cae.wisc.edu
+ Architecture:     linux64_rhe63i8
+ Platform:         Intel Linux 3.16.0-4-amd64
+ Model:            3200 MHz
+ CPU:              GenuineIntel 
+ Clock freq.:      3200 MHz
+ Number of CPUs:   4
+ Executable:       standard
+ Raw model ID:     8664
+ Config number:    186640
+ Physical memory:  16029 MB
+ Virtual memory:   7791 MB
+ Numeric format:   64-bit little-endian IEEE.
+ Bytes per word:   8
+ Disk block size:  512 bytes (64 words)
+ Remote shell cmd: /cae/apps/data/msc-2016/nastran/msc20161/linux64_rhe63i8/MSCRmtCmd (Windows, UNIX)
+                   /usr/bin/ssh (UNIX)
+-----------------------------------------------------------------
+-----------------------------------------------------------------
+MSC Nastran started Sun Feb 26 20:29:56 CST 2017
+ 20:29:56  Beginning Analysis
+SCA Kernel 17.4.414636 successfully initialized
+BLAS/LAPACK shared object "/cae/apps/data/msc-2016/nastran/msc20161/linux64_rhe63i8/libmkl_core.so" has been loaded.
+BLAS/LAPACK shared object "/cae/apps/data/msc-2016/nastran/msc20161/linux64_rhe63i8/libmkl_intel_thread.so" has been loaded.
+BLAS/LAPACK shared object "/cae/apps/data/msc-2016/nastran/msc20161/linux64_rhe63i8/libmkl_intel_ilp64.so" has been loaded.
+BLAS/LAPACK shared object "/cae/apps/data/msc-2016/nastran/msc20161/linux64_rhe63i8/libMSCblas.so" has been loaded.
+
+ 20:29:56  MSC Authorization Information - System Attributes (1004, 0)
+ 20:29:56  -----------------------------------------------------------
+  Date:          Sun Feb 26 20:29:56 2017
+  MSC Id:        a0d3c107f61b (ethernet) (Linux)
+  Hostname:      tux-101 (user cavalcanti, display /dev/tty)
+  License files: 27500@msc.license.cae.wisc.edu
+  CEID:          56BD3C53-1C29B879
+  User:          cavalcanti
+  Display:       /dev/tty
+  LAPI Version:  LAPI 9.8.3-3277 (FLEXlm 11.9.0.0)
+
+  * * * * * * * * * * * * * * * * * * * *
+  * * * * * * * * * * * * * * * * * * * *
+  * *                                 * *
+  * *   MSC Customer Entitlement ID   * *
+  * *        56BD3C53-1C29B879        * *
+  * *                                 * *
+  * * * * * * * * * * * * * * * * * * * *
+  * * * * * * * * * * * * * * * * * * * *
+
+ 20:29:56  MSC Authorization Information - Checkout Successful (1016, 0)
+ 20:29:56  -------------------------------------------------------------
+ 20:29:56  Acquired 1 license for MSC Nastran from license server on host msc.license.cae.wisc.edu
+
+
+ 20:29:56  MSC Authorization Information - Checkout Successful (1016, 0)
+ 20:29:56  -------------------------------------------------------------
+ 20:29:56  Acquired 1 license for MSC Nastran DMAP Compile from license server on host msc.license.cae.wisc.edu
+
+
+Beginning bulk data processing using the IFPStar component.
+For more information on IFPStar, please see KB article KB8019200
+on our support pages, at http://simcompanion.mscsoftware.com.
+
+ 20:29:56  56 records read from JID file "./fetch15.dat"
+
+Processing of bulk data entries is complete.
+
+ 20:29:57  Analysis started.
+ 20:29:57  Geometry access/verification to CAD part initiated (if needed).
+ 20:29:57  Geometry access/verification to CAD part successfully completed (if needed).
+ 20:29:58  54 records read from JID file "./fetch15.dat"
+ 20:29:58  NSEXIT: EXIT(0)
+ 20:29:58  Analysis complete  0
+ ================================================== 
+ Warning/Fatal Message Summary           Occurrence
+       USER WARNING MESSAGE     6450.0          1 
+       USER WARNING MESSAGE     6450.0          2 
+ ================================================== 
+1.35user 0.25system 0:02.71elapsed 59%CPU (0avgtext+0avgdata 2245180maxresident)k
+16976inputs+17496outputs (0major+36453minor)pagefaults 0swaps
+Usage: cd [-LP] [directory]
+   Or: cd [ options ] old new
+ ==================================================
+ OS:              Debian GNU/Linux 8 \n \l
+ Model:           Intel(R) Core(TM) i5-4570 CPU @ 3.20GHz
+ Nsocket:         1
+ Ncore:           4
+ HyperThreading:  Off
+ Cache:           6144 KB
+ Special:         avx2 
+ Ram:             16029 Mb	Free: 4141 Mb
+ load average ( 15 minute ):  0.100000
+ ==================================================
+ Time Summary                 CPU       Wall   ( Time in Seconds )
+ ==================================================
+ Detailed performance studies can be found at:
+ https://simcompanion.mscsoftware.com/infocenter/index?page=content&id=S:KB8022065&actp=LIST 
+ ==================================================
+-----------------------------------------------------------------
+MSC Nastran finished Sun Feb 26 20:29:58 CST 2017

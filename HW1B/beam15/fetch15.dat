@@ -1,0 +1,59 @@
+$
+$  Temporary database for OUTPUT4 restart run
+$  ------------------------------------------
+ASSIGN MASTER='fetch15.MASTER' TEMP
+ASSIGN DBALL ='fetch15.DBALL' TEMP
+ASSIGN OUTPUT4='MAA15.OP4' UNIT=11 FORM=FORMATTED
+ASSIGN OUTPUT4='KAA15.OP4' UNIT=12 FORM=FORMATTED
+ASSIGN OUTPUT4='PHIA15.OP4' UNIT=13 FORM=FORMATTED
+$
+$  Original database (read-only access during restart)
+$  ---------------------------------------------------
+ASSIGN TAM ='beam15.MASTER'
+RESTART LOGI=TAM VERSION=LAST
+$
+$  Print database dictionary (optional)
+$  ------------------------------------
+DBDIR $
+$
+ID	FETCH, MATS 
+SOL   103   $ Normal modes - superelements
+TIME  30    $ 30 CPU minutes
+DIAG  8     $ Print matrix trailers
+DIAG  20    $ Print database fetch/store messages
+$
+COMPILE DMAP=SEMODES,SOUIN=MSCSOU,LIST,NOREF $
+$ALTER   'DTIIN','MSGHAN' $  Remove all of subDMAP SEMODES after restart ops 
+ALTER    'DO WHILE','MSGHAN' $ REMOVE ALL OF SUBDMAP SEMODES AFTER RESTART OPS
+$
+TYPE     DB,MAA $                                A-set mass matrix
+TYPE     DB,KAA $                                A-set stiffness matrix
+TYPE     DB,PHA $                                A-set mode matrix
+$
+OUTPUT4  MAA//0/11/-1 $                          Output matrices in BCD format
+OUTPUT4  KAA//0/12/-1 $                          Output matrices in BCD format
+OUTPUT4  PHA//0/13/-1 $                          Output matrices in BCD format
+$
+CEND
+$==============================================================================
+TITLE    =FIXED-FIXED 15 ELE BEAM
+SUBTITLE =FINITE ELEMENT MODEL (FEM)
+LABEL    =NORMAL MODES ANALYSIS
+$
+ECHO = UNSORT        $ Print unsorted bulk data deck
+$
+SEALL = ALL          $ Required for SOL 103
+SUPER = ALL         $ Required for SOL 103
+$
+SPC = 10             $ Constrain to plane motion
+METHOD = 70          $ First 20 modes
+$
+DISP(PLOT) = ALL     $ Recover but do not print mode shapes
+$
+$==============================================================================
+BEGIN BULK
+$==============================================================================
+enddata
+
+
+

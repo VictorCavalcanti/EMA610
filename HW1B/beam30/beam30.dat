@@ -1,0 +1,64 @@
+$
+ASSIGN MASTER='beam30.MASTER'
+ASSIGN DBALL ='beam30.DBALL'
+$
+ID    BEAM,MODES
+SOL   103   $ Normal modes - superelements
+TIME  30    $ 30 CPU minutes
+DIAG  8     $ Print matrix trailers
+DIAG  20    $ Print database fetch/store messages
+$
+$
+CEND
+TITLE    =FIXED-FIXED 30 ELE BEAM
+SUBTITLE =FINITE ELEMENT MODEL (FEM)
+LABEL    =NORMAL MODES ANALYSIS
+$
+ECHO = UNSORT        $ Print unsorted bulk data deck
+$
+SEALL = ALL          $ Required for SOL 103
+SUPER = ALL         $ Required for SOL 103
+$
+SPC = 10             $ Constrain to plane motion
+METHOD = 70          $ First 20 modes
+$
+DISP(PLOT) = ALL     $ Recover but do not print mode shapes
+$
+BEGIN BULK
+$
+$
+$  PARAMETER CARDS
+$  ---------------
+$
+PARAM   AUTOSPC YES
+PARAM   GRDPNT  0
+PARAM   USETPRT 0
+PARAM   WTMASS  .00259
+PARAM   COUPMASS1 
+PARAM   POST    0
+$
+$
+$  COMPUTE EIGENVALUES USING THE LANCZOS METHOD
+$  --------------------------------------------
+$
+$       SID     F1      F2      ND
+EIGRL   70                      20
+$
+$  SPECIFY ASET DOF
+$  ----------------
+$       C       GID1    "THRU"  GID2
+ASET1   26      102     THRU    130
+
+$
+$  CONSTRAIN OUT-OF-PLANE MOTION
+$  -----------------------------
+$       SID     C       GID1    "THRU"  GID2
+SPC1    10      123456  101     131
+$
+$
+$  BEAM BULK DATA
+$  --------------
+$
+INCLUDE 'beam30.blk'
+$
+ENDDATA

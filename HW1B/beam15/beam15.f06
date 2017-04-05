@@ -1,0 +1,622 @@
+1
+ 
+ 
+ 
+ 
+                      Warning: This computer program is protected by copyright law and international treaties.       
+                  Unauthorized use, reproduction or distribution of this computer program, or any portion of it, may 
+                                          result in severe civil and criminal penalties.                             
+                         Copyright (C) 2016 MSC Software Corporation and its licensors. All rights reserved.         
+ 
+ 
+                                              * * * * * * * * * * * * * * * * * * * *
+                                              * * * * * * * * * * * * * * * * * * * *
+                                              * *                                 * *
+                                              * *           MSC Software          * *
+                                              * *               CORP              * *
+                                              * *                                 * *
+                                              * *      M S C   N a s t r a n      * *
+                                              * *                                 * *
+                                              * *                                 * *
+                                              * *                                 * *
+                                              * *     Version 2016.1.1-CL425041   * *
+                                              * *                                 * *
+                                              * *                                 * *
+                                              * *                                 * *
+                                              * *          JUL 15, 2016           * *
+                                              * *                                 * *
+                                              * *       x86-64 Based System       * *
+                                              * * MODEL Intel 3200 MHz (tux-101)  * *
+                                              * *      Linux 3.16.0-4-amd64       * *
+                                              * *Compiled for x8664 (SINGLE Mode) * *
+                                              * *                                 * *
+                                              * * * * * * * * * * * * * * * * * * * *
+                                              * * * * * * * * * * * * * * * * * * * *
+1 News file -  (June 1, 2016):
+  
+               Welcome to MSC Nastran 2016.1
+  
+  
+   Details of the new capabilities can be found in the MSC Nastran 2016.1
+     Release Guide available online in the installation documentation
+     sub-directory.
+   Additional information can be found at the MSC Nastran Product Support page:
+  
+      http://simcompanion.mscsoftware.com
+  
+  
+   The support page provides links to these valuable information:
+      * A searchable Knowledge Base containing examples and answers to thousands
+        of frequently asked questions written by MSC Software subject-matter
+        experts.
+      * Peer-to-peer Discussion Forums enabling you to post questions for your
+        MSC Software products and receive answers from other users worldwide.
+      * A list of known issues with the product and any workarounds.
+      * Instructions on how to contact technical support
+      * A mechanism for sending us product feedback or enhancement requests.
+      * Hardware and software requirements.
+      * Examples and Tutorials
+      * and much more.
+  
+   For information on training, please visit our Training web site
+  
+      http://www.mscsoftware.com/Contents/Services/Training/
+  
+   MSC Nastran brings powerful new features and enhancements for engineering
+   solutions.
+  
+  
+     HPC
+     -  The performance of extraction of eigenmodes using ACMS has been improved
+          using SMP. This is applicable for SOL 103, SOL 111, SOL 200 and
+          SOL 400.
+     -  The solution of linear equations encountered in SOL 101,107,108,111 and
+          SOL 200 has been improved when using the Intel MKL Pardiso solver for
+          SMP.
+     -  Element stiffness and stress recovery has been parallelized in SOL 400
+          using SMP.
+  
+     Acoustics
+     -  The Equivalent Radiated Power (ERP) capability now supports higher order
+          shell elements and solid elements. The Modal Participation Factor(MPF)
+          can be obtained and the output has been improved.
+     -  For acoustic analysis it is also possible to output the velocity normal
+          to the surface and the vibrational intensity.
+1    -  An interface to utilize Digimat frequency dependent material properties
+          has been added for SOL 108 and SOL 111. This is available for MAT1,
+          MAT2, MAT8 and MAT9 - NEW in 2016.1 release
+  
+     Optimization
+     -  Global Optimization capability has been introduced to find the true
+          optimal value as opposed to a potentially local optimum.
+     -  Multi-Model optimization technique has been added that allows you to
+          optimize the response across multiple simulation models.
+     -  Optimization based upon Weight response associated with property or
+          material id has been expanded to support topology optimization.
+  
+     Rotordynamics
+     -  The rotordynamic capability has been expanded to support 3D behavior.
+  
+     Connector Technology
+     -  Connector technology, CWELD, CFAST, and CSEAM connectors are improved:
+     -  The elements can be used consistently for linear analysis and large
+          displacement analysis (SOL 400).
+     -  The projection algorithm has been improved.
+     -  The connector elements may be used with finer meshes because the 3 by 3
+          search algorithm has been replaced with a general algorithm.
+     -   Force output is available in a SOL 400 simulation for ANALYSIS=NTRAN.
+     -   Additional output capability to summarize the connector behavior.
+  
+     Implicit Nonlinear Analysis - SOL 400
+     -  The segment-to-segment procedure has been made more robust.
+     -  Large interference conditions is supported
+     -  Gaps / clearance can be retained in contact simulations
+     -  Beam contact, using the cross-section geometry is supported.
+     -  Restart can now be performed with SOL 400 using advanced elements.
+     -  It is possible to use advanced elements when creating a superelement.
+  
+     Explicit Nonlinear Analysis - SOL 700
+     -  New material models have been added for creep and concrete behavior.
+     -  Severely distorted elements may be eliminated in SPH simulation.
+     -  Dynamic relaxation is available with body loads.
+     -  A body may be inserted within another body to model rebars in concrete.
+  
+     Results Database
+     -  Results may be output to an HDF5 results database
+  
+     F06 Reader - Provided Synopsis of Key Nastran Files (F06, F04 and LOG)
+     - Model data summary
+     - Links to MSC SimCompanion for Error and Warning Messages.
+     - Link to local Quick Reference Guide (QRG)
+     - XY-Plots of key global results like nonlinear convergence, design cycle,
+        etc.
+  
+     Delivery
+1    -   Win 7 32-bit is no longer available.
+     -   The I4 and I8 installers have been split.
+  
+  
+    Documentation
+  
+     The complete documentation set is provided in a separate installer and when
+     installed is available at:
+     MSC_DOC_DIR/doc/pdf_nastran directory.
+     Where MSC_DOC_DIR is the directory where documentation was installed
+     This help set has cross references between documents, links to how-to
+     videos, and example files.
+  
+    Individual MSC Nastran documents are available for download from the
+      Simcompanion Website at:
+      http://simcompanion.mscsoftware.com/
+  
+    These documents were updated for the MSC Nastran 2016 and 2016.1 Release
+  
+         1.  MSC Nastran 2016.1 Installation and Operations Guide
+         2.  MSC Nastran 2016.1 Quick Reference Guide
+         3.  MSC Nastran 2016.1 Release Guide
+         4.  MSC Nastran 2016   Getting Started User's Guide
+         4.  MSC Nastran 2016.1 Linear Statics Analysis User's Guide
+         5.  MSC Nastran 2016   Dynamic Analysis User's Guide
+         6.  MSC Nastran 2016   Superelements User's Guide
+         7.  MSC Nastran 2016   Rotordynamics User's Guide
+         8.  MSC Nastran 2016.1 Demonstration Problems Manual
+         9.  MSC Nastran 2016   Nastran Embedded Fatigue User's Guide
+        10.  MSC Nastran 2016.1 Design Sensitivity and Optimization
+        11.  MSC Nastran 2016   Nonlinear User's Guide SOL 400
+        12.  MSC Nastran 2016   Explicit Nonlinear (SOL 700) User Guide
+        13.  MSC Nastran 2016   Reference Manual
+        14.  MSC Nastran 2016.1 DMAP Programmer's Guide
+        15.  MSC Nastran 2016   Utilities Guide (New)
+        16.  MSC Nastran 2016   User Defined Services
+  
+  
+  
+    Please refer to:
+  
+    MSC_DOC_DIR/doc/pdf_nastran/nastran_library.pdf
+  
+  
+1                                                                          FEBRUARY  26, 2017  MSC Nastran  7/15/16   PAGE     1
+                                                                                                                                    
+0        N A S T R A N    F I L E    A N D    S Y S T E M    P A R A M E T E R    E C H O                                           
+0                                                                                                                                   
+                                                                                                                                    
+                                                                                                                                    
+     NASTRAN BUFFSIZE=8193 $(/CAE/APPS/DATA/MSC-2016/NASTRAN/CONF/NAST20161RC[4])    
+     $ $(/CAE/APPS/DATA/MSC-2016/NASTRAN/CONF/NAST20161RC[6])                        
+     $ $(/CAE/APPS/DATA/MSC-2016/NASTRAN/CONF/NAST20161RC[13])                       
+     $ END $(/CAE/APPS/DATA/MSC-2016/NASTRAN/CONF/NAST20161RC[14])                   
+     $                                                                               
+     ASSIGN MASTER='beam15.MASTER'                                                   
+     ASSIGN DBALL ='beam15.DBALL'                                                    
+     $                                                                               
+1                                                                          FEBRUARY  26, 2017  MSC Nastran  7/15/16   PAGE     2
+                                                                                                                                    
+0        N A S T R A N    E X E C U T I V E    C O N T R O L    E C H O                                                             
+0                                                                                                                                   
+                                                                                                                                    
+                                                                                                                                    
+     ID    BEAM,MODES                                                                        
+     SOL   103   $ NORMAL MODES - SUPERELEMENTS                                              
+     TIME  30    $ 30 CPU MINUTES                                                            
+     DIAG  8     $ PRINT MATRIX TRAILERS                                                     
+     DIAG  20    $ PRINT DATABASE FETCH/STORE MESSAGES                                       
+     $                                                                                       
+     $                                                                                       
+     CEND                                                                                    
+1   FIXED-FIXED 15 ELE BEAM                                                FEBRUARY  26, 2017  MSC Nastran  7/15/16   PAGE     3
+     FINITE ELEMENT MODEL (FEM)                                                                                                     
+0    NORMAL MODES ANALYSIS                                                                                                          
+0                                        C A S E    C O N T R O L    E C H O                                                        
+                 COMMAND                                                                                                            
+                 COUNT                                                                                                              
+                  1      TITLE    =FIXED-FIXED 15 ELE BEAM                                                       
+                  2      SUBTITLE =FINITE ELEMENT MODEL (FEM)                                                    
+                  3      LABEL    =NORMAL MODES ANALYSIS                                                         
+                  4      $                                                                                       
+                  5      ECHO = UNSORT        $ PRINT UNSORTED BULK DATA DECK                                    
+                  6      $                                                                                       
+                  7      SEALL = ALL          $ REQUIRED FOR SOL 103                                             
+                  8      SUPER = ALL         $ REQUIRED FOR SOL 103                                              
+                  9      $                                                                                       
+                 10      SPC = 10             $ CONSTRAIN TO PLANE MOTION                                        
+                 11      METHOD = 70          $ FIRST 20 MODES                                                   
+                 12      $                                                                                       
+                 13      DISP(PLOT) = ALL     $ RECOVER BUT DO NOT PRINT MODE SHAPES                             
+                 14      $                                                                                       
+                 15      BEGIN BULK                                                                              
+1   FIXED-FIXED 15 ELE BEAM                                                FEBRUARY  26, 2017  MSC Nastran  7/15/16   PAGE     4
+     FINITE ELEMENT MODEL (FEM)                                                                                                     
+0    NORMAL MODES ANALYSIS                                                                                                          
+                                              I N P U T   B U L K   D A T A   E C H O                                               
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                   28-        $
+                   29-        $
+                   30-        $  PARAMETER CARDS
+                   31-        $  ---------------
+                   32-        $
+                   33-        PARAM   AUTOSPC YES
+                   34-        PARAM   GRDPNT  0
+                   35-        PARAM   USETPRT 0
+                   36-        PARAM   WTMASS  .00259
+                   37-        PARAM   COUPMASS1
+                   38-        PARAM   POST    0
+                   39-        $
+                   40-        $
+                   41-        $  COMPUTE EIGENVALUES USING THE LANCZOS METHOD
+                   42-        $  --------------------------------------------
+                   43-        $
+                   44-        $       SID     F1      F2      ND
+                   45-        EIGRL   70                      20
+                   46-        $
+                   47-        $  SPECIFY ASET DOF
+                   48-        $  ----------------
+                   49-        $       C       GID1    "THRU"  GID2
+                   50-        ASET1   26      102     THRU    115
+                   51-        $
+                   52-        $  CONSTRAIN OUT-OF-PLANE MOTION
+                   53-        $  -----------------------------
+                   54-        $       SID     C       GID1    "THRU"  GID2
+                   55-        $       SID     C       GID1    GID2
+                   57-        SPC1    10      123456  101     116
+                   58-        $
+                   59-        $
+                   60-        $  BEAM BULK DATA
+                   61-        $  --------------
+                   62-        $
+                    1-        $
+                    2-        $
+                    3-        $  EXAMPLE BEAM PROBLEM - FREE-FREE - CONCENTRATED MASS
+                    4-        $  ----------------------------------------------------
+                    5-        $
+                    6-        $  GRID POINTS
+                    7-        $  -----------
+                    8-        $
+                    9-        $       2       3       4       5       6       7       8       9
+                   10-        $
+                   11-        $       ID      CP      X1      X2      X3      CD
+1   FIXED-FIXED 15 ELE BEAM                                                FEBRUARY  26, 2017  MSC Nastran  7/15/16   PAGE     5
+     FINITE ELEMENT MODEL (FEM)                                                                                                     
+0    NORMAL MODES ANALYSIS                                                                                                          
+                                              I N P U T   B U L K   D A T A   E C H O                                               
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                   12-        GRID    101     0       0.0     0.0     0.0     0
+                   13-        GRID    102     0       2.667   0.0     0.0     0
+                   14-        GRID    103     0       5.333   0.0     0.0     0
+                   15-        GRID    104     0       8.000   0.0     0.0     0
+                   16-        GRID    105     0       10.66   0.0     0.0     0
+                   17-        GRID    106     0       13.33   0.0     0.0     0
+                   18-        GRID    107     0       16.00   0.0     0.0     0
+                   19-        GRID    108     0       18.66   0.0     0.0     0
+                   20-        GRID    109     0       21.33   0.0     0.0     0
+                   21-        GRID    110     0       24.00   0.0     0.0     0
+                   22-        GRID    111     0       26.66   0.0     0.0     0
+                   23-        GRID    112     0       29.33   0.0     0.0     0
+                   24-        GRID    113     0       32.00   0.0     0.0     0
+                   25-        GRID    114     0       34.66   0.0     0.0     0
+                   26-        GRID    115     0       37.33   0.0     0.0     0
+                   27-        GRID    116     0       40.00   0.0     0.0     0
+                   28-        $GRID    117     0       2.786   0.0     0.0     0
+                   29-        $GRID    118     0       2.960   0.0     0.0     0
+                   30-        $GRID    119     0       3.135   0.0     0.0     0
+                   31-        $GRID    120     0       3.309   0.0     0.0     0
+                   32-        $GRID    121     0       3.483   0.0     0.0     0
+                   33-        $GRID    122     0       3.657   0.0     0.0     0
+                   34-        $
+                   35-        $  BAR ELEMENTS
+                   36-        $  ------------
+                   37-        $       2       3       4       5       6       7       8       9
+                   38-        $
+                   39-        $       EID     PID     GA      GB      X1      X2      X3
+                   40-        CBAR    101     100     101     102     0.0     1.0     0.0
+                   41-        CBAR    102     100     102     103     0.0     1.0     0.0
+                   42-        CBAR    103     100     103     104     0.0     1.0     0.0
+                   43-        CBAR    104     100     104     105     0.0     1.0     0.0
+                   44-        CBAR    105     100     105     106     0.0     1.0     0.0
+                   45-        CBAR    106     100     106     107     0.0     1.0     0.0
+                   46-        CBAR    107     100     107     108     0.0     1.0     0.0
+                   47-        CBAR    108     100     108     109     0.0     1.0     0.0
+                   48-        CBAR    109     100     109     110     0.0     1.0     0.0
+                   49-        CBAR    110     100     110     111     0.0     1.0     0.0
+                   50-        $
+                   51-        $  BAR CONTAINING NONSTRUCTURAL MASS SIMULATING CONCENTRATED MASS
+                   52-        $  --------------------------------------------------------------
+                   53-        CBAR    111     100     111     112     0.0     1.0     0.0
+                   54-        CBAR    112     100     112     113     0.0     1.0     0.0
+                   55-        CBAR    113     100     113     114     0.0     1.0     0.0
+                   56-        CBAR    114     100     114     115     0.0     1.0     0.0
+1   FIXED-FIXED 15 ELE BEAM                                                FEBRUARY  26, 2017  MSC Nastran  7/15/16   PAGE     6
+     FINITE ELEMENT MODEL (FEM)                                                                                                     
+0    NORMAL MODES ANALYSIS                                                                                                          
+                                              I N P U T   B U L K   D A T A   E C H O                                               
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                   57-        CBAR    115     100     115     116     0.0     1.0     0.0
+                   58-        $CBAR    116     100     116     117     0.0     1.0     0.0
+                   59-        $CBAR    117     100     117     118     0.0     1.0     0.0
+                   60-        $CBAR    118     100     118     119     0.0     1.0     0.0
+                   61-        $CBAR    119     100     119     120     0.0     1.0     0.0
+                   62-        $CBAR    120     100     120     121     0.0     1.0     0.0
+                   63-        $CBAR    121     100     121     122     0.0     1.0     0.0
+                   64-        $
+                   65-        $  BAR PROPERTIES
+                   66-        $  --------------
+                   67-        $       2       3       4       5       6       7       8       9
+                   68-        $       ID      MAT     A       I1      I2      J
+                   69-        PBAR    100     100     0.25    1.30E-3 2.08E-2 4.38E-3
+                   70-        $
+                   71-        $       ID      MAT     A       I1      I2      J       NSM
+                   72-        $PBAR    200     100     1.61E-4 2.17E-9 2.17E-9 4.34E-9 6.89
+                   73-        $
+                   74-        $       ID      E       G       NU      RHO
+                   75-        MAT1    100     10E6            .33     0.098
+                   76-        $
+                   64-        $
+1   FIXED-FIXED 15 ELE BEAM                                                FEBRUARY  26, 2017  MSC Nastran  7/15/16   PAGE     7
+     FINITE ELEMENT MODEL (FEM)                                                                                                     
+0    NORMAL MODES ANALYSIS                                                                                                          
+                                        M O D E L   S U M M A R Y          BULK = 0
+                                   ENTRY NAME        NUMBER OF ENTRIES
+                                   ----------        -----------------
+                                        ASET1                        1
+                                         CBAR                       15
+                                        EIGRL                        1
+                                         GRID                       16
+                                         MAT1                        1
+                                        PARAM                        6
+                                         PBAR                        1
+                                         SPC1                        1
+
+1   FIXED-FIXED 15 ELE BEAM                                                FEBRUARY  26, 2017  MSC Nastran  7/15/16   PAGE     8
+     FINITE ELEMENT MODEL (FEM)                                                                                                     
+0    NORMAL MODES ANALYSIS                                                                                                          
+ ^^^     
+ ^^^ >>> IFP OPERATIONS COMPLETE <<< 
+ ^^^     
+1   FIXED-FIXED 15 ELE BEAM                                                FEBRUARY  26, 2017  MSC Nastran  7/15/16   PAGE     9
+     FINITE ELEMENT MODEL (FEM)                                                                                                     
+0    NORMAL MODES ANALYSIS                                                                                                          
+1   FIXED-FIXED 15 ELE BEAM                                                FEBRUARY  26, 2017  MSC Nastran  7/15/16   PAGE    10
+     FINITE ELEMENT MODEL (FEM)                                                                                                     
+0                                                                                                                                   
+1   FIXED-FIXED 15 ELE BEAM                                                FEBRUARY  26, 2017  MSC Nastran  7/15/16   PAGE    11
+     FINITE ELEMENT MODEL (FEM)                                                                                                     
+0                                                                                                                                   
+                           O U T P U T   F R O M   G R I D   P O I N T   W E I G H T   G E N E R A T O R
+0                                                     REFERENCE POINT =        0
+                                                                M O
+                      *  9.800000E-01  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00 *
+                      *  0.000000E+00  9.800000E-01  0.000000E+00  0.000000E+00  0.000000E+00  1.960000E+01 *
+                      *  0.000000E+00  0.000000E+00  9.800000E-01  0.000000E+00 -1.960000E+01  0.000000E+00 *
+                      *  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00 *
+                      *  0.000000E+00  0.000000E+00 -1.960000E+01  0.000000E+00  5.226667E+02  0.000000E+00 *
+                      *  0.000000E+00  1.960000E+01  0.000000E+00  0.000000E+00  0.000000E+00  5.226667E+02 *
+                                                                 S
+                                           *  1.000000E+00  0.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  1.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  0.000000E+00  1.000000E+00 *
+                               DIRECTION
+                          MASS AXIS SYSTEM (S)     MASS              X-C.G.        Y-C.G.        Z-C.G.
+                                  X            9.800000E-01      0.000000E+00  0.000000E+00  0.000000E+00
+                                  Y            9.800000E-01      2.000000E+01  0.000000E+00  0.000000E+00
+                                  Z            9.800000E-01      2.000000E+01  0.000000E+00  0.000000E+00
+                                                                I(S)
+                                           *  0.000000E+00  0.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  1.306667E+02  0.000000E+00 *
+                                           *  0.000000E+00  0.000000E+00  1.306667E+02 *
+                                                                I(Q)
+                                           *  0.000000E+00                             *
+                                           *                1.306667E+02               *
+                                           *                              1.306667E+02 *
+                                                                 Q
+                                           *  1.000000E+00  0.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  1.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  0.000000E+00  1.000000E+00 *
+
+1   FIXED-FIXED 15 ELE BEAM                                                FEBRUARY  26, 2017  MSC Nastran  7/15/16   PAGE    12
+     FINITE ELEMENT MODEL (FEM)                                                                                                     
+0                                                                                                                                   
+1   FIXED-FIXED 15 ELE BEAM                                                FEBRUARY  26, 2017  MSC Nastran  7/15/16   PAGE    13
+     FINITE ELEMENT MODEL (FEM)                                                                                                     
+0                                                                                                                                   
+0 RESULTANTS ABOUT ORIGIN OF SUPERELEMENT BASIC COORDINATE SYSTEM IN SUPERELEMENT BASIC SYSTEM COORDINATES.
+
+0                                                  OLOAD    RESULTANT       
+  SUBCASE/    LOAD
+  DAREA ID    TYPE       T1            T2            T3            R1            R2            R3
+0        1     FX    0.000000E+00     ----          ----          ----       0.000000E+00  0.000000E+00                             
+               FY       ----       0.000000E+00     ----       0.000000E+00     ----       0.000000E+00                             
+               FZ       ----          ----       0.000000E+00  0.000000E+00  0.000000E+00     ----                                  
+               MX       ----          ----          ----       0.000000E+00     ----          ----                                  
+               MY       ----          ----          ----          ----       0.000000E+00     ----                                  
+               MZ       ----          ----          ----          ----          ----       0.000000E+00                             
+             TOTALS  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00
+1   FIXED-FIXED 15 ELE BEAM                                                FEBRUARY  26, 2017  MSC Nastran  7/15/16   PAGE    14
+     FINITE ELEMENT MODEL (FEM)                                                                                                     
+0    NORMAL MODES ANALYSIS                                                                                                          
+                U S E T   D E F I N I T I O N   T A B L E   ( I N T E R N A L   S E Q U E N C E ,   R O W   S O R T )
+                                                       SB       DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=      101-1      101-2      101-3      101-4      101-5      101-6      116-1      116-2      116-3      116-4    =    10
+     11=      116-5      116-6
+1   FIXED-FIXED 15 ELE BEAM                                                FEBRUARY  26, 2017  MSC Nastran  7/15/16   PAGE    15
+     FINITE ELEMENT MODEL (FEM)                                                                                                     
+0    NORMAL MODES ANALYSIS                                                                                                          
+                                                       L        DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=      102-2      102-6      103-2      103-6      104-2      104-6      105-2      105-6      106-2      106-6    =    10
+     11=      107-2      107-6      108-2      108-6      109-2      109-6      110-2      110-6      111-2      111-6    =    20
+     21=      112-2      112-6      113-2      113-6      114-2      114-6      115-2      115-6
+1   FIXED-FIXED 15 ELE BEAM                                                FEBRUARY  26, 2017  MSC Nastran  7/15/16   PAGE    16
+     FINITE ELEMENT MODEL (FEM)                                                                                                     
+0    NORMAL MODES ANALYSIS                                                                                                          
+                                                       A        DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=      102-2      102-6      103-2      103-6      104-2      104-6      105-2      105-6      106-2      106-6    =    10
+     11=      107-2      107-6      108-2      108-6      109-2      109-6      110-2      110-6      111-2      111-6    =    20
+     21=      112-2      112-6      113-2      113-6      114-2      114-6      115-2      115-6
+1   FIXED-FIXED 15 ELE BEAM                                                FEBRUARY  26, 2017  MSC Nastran  7/15/16   PAGE    17
+     FINITE ELEMENT MODEL (FEM)                                                                                                     
+0    NORMAL MODES ANALYSIS                                                                                                          
+                                                       F        DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=      102-1      102-2      102-3      102-4      102-5      102-6      103-1      103-2      103-3      103-4    =    10
+     11=      103-5      103-6      104-1      104-2      104-3      104-4      104-5      104-6      105-1      105-2    =    20
+     21=      105-3      105-4      105-5      105-6      106-1      106-2      106-3      106-4      106-5      106-6    =    30
+     31=      107-1      107-2      107-3      107-4      107-5      107-6      108-1      108-2      108-3      108-4    =    40
+     41=      108-5      108-6      109-1      109-2      109-3      109-4      109-5      109-6      110-1      110-2    =    50
+     51=      110-3      110-4      110-5      110-6      111-1      111-2      111-3      111-4      111-5      111-6    =    60
+     61=      112-1      112-2      112-3      112-4      112-5      112-6      113-1      113-2      113-3      113-4    =    70
+     71=      113-5      113-6      114-1      114-2      114-3      114-4      114-5      114-6      115-1      115-2    =    80
+     81=      115-3      115-4      115-5      115-6
+1   FIXED-FIXED 15 ELE BEAM                                                FEBRUARY  26, 2017  MSC Nastran  7/15/16   PAGE    18
+     FINITE ELEMENT MODEL (FEM)                                                                                                     
+0    NORMAL MODES ANALYSIS                                                                                                          
+                                                       N        DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=      101-1      101-2      101-3      101-4      101-5      101-6      102-1      102-2      102-3      102-4    =    10
+     11=      102-5      102-6      103-1      103-2      103-3      103-4      103-5      103-6      104-1      104-2    =    20
+     21=      104-3      104-4      104-5      104-6      105-1      105-2      105-3      105-4      105-5      105-6    =    30
+     31=      106-1      106-2      106-3      106-4      106-5      106-6      107-1      107-2      107-3      107-4    =    40
+     41=      107-5      107-6      108-1      108-2      108-3      108-4      108-5      108-6      109-1      109-2    =    50
+     51=      109-3      109-4      109-5      109-6      110-1      110-2      110-3      110-4      110-5      110-6    =    60
+     61=      111-1      111-2      111-3      111-4      111-5      111-6      112-1      112-2      112-3      112-4    =    70
+     71=      112-5      112-6      113-1      113-2      113-3      113-4      113-5      113-6      114-1      114-2    =    80
+     81=      114-3      114-4      114-5      114-6      115-1      115-2      115-3      115-4      115-5      115-6    =    90
+     91=      116-1      116-2      116-3      116-4      116-5      116-6
+1   FIXED-FIXED 15 ELE BEAM                                                FEBRUARY  26, 2017  MSC Nastran  7/15/16   PAGE    19
+     FINITE ELEMENT MODEL (FEM)                                                                                                     
+0    NORMAL MODES ANALYSIS                                                                                                          
+                                                       G        DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=      101-1      101-2      101-3      101-4      101-5      101-6      102-1      102-2      102-3      102-4    =    10
+     11=      102-5      102-6      103-1      103-2      103-3      103-4      103-5      103-6      104-1      104-2    =    20
+     21=      104-3      104-4      104-5      104-6      105-1      105-2      105-3      105-4      105-5      105-6    =    30
+     31=      106-1      106-2      106-3      106-4      106-5      106-6      107-1      107-2      107-3      107-4    =    40
+     41=      107-5      107-6      108-1      108-2      108-3      108-4      108-5      108-6      109-1      109-2    =    50
+     51=      109-3      109-4      109-5      109-6      110-1      110-2      110-3      110-4      110-5      110-6    =    60
+     61=      111-1      111-2      111-3      111-4      111-5      111-6      112-1      112-2      112-3      112-4    =    70
+     71=      112-5      112-6      113-1      113-2      113-3      113-4      113-5      113-6      114-1      114-2    =    80
+     81=      114-3      114-4      114-5      114-6      115-1      115-2      115-3      115-4      115-5      115-6    =    90
+     91=      116-1      116-2      116-3      116-4      116-5      116-6
+1   FIXED-FIXED 15 ELE BEAM                                                FEBRUARY  26, 2017  MSC Nastran  7/15/16   PAGE    20
+     FINITE ELEMENT MODEL (FEM)                                                                                                     
+0    NORMAL MODES ANALYSIS                                                                                                          
+                                                       O        DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=      102-1      102-3      102-4      102-5      103-1      103-3      103-4      103-5      104-1      104-3    =    10
+     11=      104-4      104-5      105-1      105-3      105-4      105-5      106-1      106-3      106-4      106-5    =    20
+     21=      107-1      107-3      107-4      107-5      108-1      108-3      108-4      108-5      109-1      109-3    =    30
+     31=      109-4      109-5      110-1      110-3      110-4      110-5      111-1      111-3      111-4      111-5    =    40
+     41=      112-1      112-3      112-4      112-5      113-1      113-3      113-4      113-5      114-1      114-3    =    50
+     51=      114-4      114-5      115-1      115-3      115-4      115-5
+1   FIXED-FIXED 15 ELE BEAM                                                FEBRUARY  26, 2017  MSC Nastran  7/15/16   PAGE    21
+     FINITE ELEMENT MODEL (FEM)                                                                                                     
+0    NORMAL MODES ANALYSIS                                                                                                          
+                                                       S        DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=      101-1      101-2      101-3      101-4      101-5      101-6      116-1      116-2      116-3      116-4    =    10
+     11=      116-5      116-6
+1   FIXED-FIXED 15 ELE BEAM                                                FEBRUARY  26, 2017  MSC Nastran  7/15/16   PAGE    22
+     FINITE ELEMENT MODEL (FEM)                                                                                                     
+0    NORMAL MODES ANALYSIS                                                                                                          
+ *** USER INFORMATION MESSAGE 5010 (LNCILS)
+     STURM SEQUENCE DATA FOR EIGENVALUE EXTRACTION.
+     TRIAL EIGENVALUE = 1.640985D+06, CYCLES = 2.038790D+02 THE STURM COUNT = 3
+
+ TABLE OF SHIFTS:  (LNNRIGL)
+ SHIFT #        SHIFT VALUE         FREQUENCY, CYCLES     # EIGENVALUES BELOW    # NEW EIGENVALUES FOUND
+     1.        1.6409850E+06          2.0387897E+02                 3                       28
+
+1   FIXED-FIXED 15 ELE BEAM                                                FEBRUARY  26, 2017  MSC Nastran  7/15/16   PAGE    23
+     FINITE ELEMENT MODEL (FEM)                                                                                                     
+0    NORMAL MODES ANALYSIS                                                                                                          
+0
+
+
+                          E I G E N V A L U E  A N A L Y S I S   S U M M A R Y   (READ MODULE) 
+
+
+
+                                     BLOCK SIZE USED ......................     7
+
+                                     NUMBER OF DECOMPOSITIONS .............     1
+
+                                     NUMBER OF ROOTS FOUND ................    20
+
+                                     NUMBER OF SOLVES REQUIRED ............     6
+
+1   FIXED-FIXED 15 ELE BEAM                                                FEBRUARY  26, 2017  MSC Nastran  7/15/16   PAGE    24
+     FINITE ELEMENT MODEL (FEM)                                                                                                     
+0    NORMAL MODES ANALYSIS                                                                                                          
+ 
+                                              R E A L   E I G E N V A L U E S
+   MODE    EXTRACTION      EIGENVALUE            RADIANS             CYCLES            GENERALIZED         GENERALIZED
+    NO.       ORDER                                                                       MASS              STIFFNESS
+        1         1        4.005927E+04        2.001481E+02        3.185456E+01        1.000000E+00        4.005927E+04
+        2         2        3.044179E+05        5.517408E+02        8.781228E+01        1.000000E+00        3.044179E+05
+        3         3        1.170271E+06        1.081791E+03        1.721723E+02        1.000000E+00        1.170271E+06
+        4         4        3.200011E+06        1.788857E+03        2.847055E+02        1.000000E+00        3.200011E+06
+        5         5        7.150157E+06        2.673978E+03        4.255768E+02        1.000000E+00        7.150157E+06
+        6         6        1.397861E+07        3.738798E+03        5.950481E+02        1.000000E+00        1.397861E+07
+        7         7        2.486091E+07        4.986072E+03        7.935580E+02        1.000000E+00        2.486091E+07
+        8         8        4.121510E+07        6.419899E+03        1.021759E+03        1.000000E+00        4.121510E+07
+        9         9        6.473801E+07        8.045994E+03        1.280560E+03        1.000000E+00        6.473801E+07
+       10        10        9.742956E+07        9.870641E+03        1.570961E+03        1.000000E+00        9.742956E+07
+       11        11        1.416658E+08        1.190234E+04        1.894317E+03        1.000000E+00        1.416658E+08
+       12        12        2.000264E+08        1.414307E+04        2.250939E+03        1.000000E+00        2.000264E+08
+       13        13        2.744789E+08        1.656741E+04        2.636785E+03        1.000000E+00        2.744789E+08
+       14        14        3.589697E+08        1.894649E+04        3.015428E+03        1.000000E+00        3.589697E+08
+       15        15        5.517386E+08        2.348912E+04        3.738409E+03        1.000000E+00        5.517386E+08
+       16        16        7.084244E+08        2.661624E+04        4.236107E+03        1.000000E+00        7.084244E+08
+       17        17        9.219322E+08        3.036334E+04        4.832475E+03        1.000000E+00        9.219322E+08
+       18        18        1.196892E+09        3.459612E+04        5.506144E+03        1.000000E+00        1.196892E+09
+       19        19        1.547154E+09        3.933388E+04        6.260182E+03        1.000000E+00        1.547154E+09
+       20        20        1.990464E+09        4.461462E+04        7.100637E+03        1.000000E+00        1.990464E+09
+1   FIXED-FIXED 15 ELE BEAM                                                FEBRUARY  26, 2017  MSC Nastran  7/15/16   PAGE    25
+     FINITE ELEMENT MODEL (FEM)                                                                                                     
+0    NORMAL MODES ANALYSIS                                                                                                          
+ * * * *  D B D I C T   P R I N T  * * * *      SUBDMAP = PRTSUM  ,  DMAP STATEMENT NO.     68
+
+
+
+0                                   * * * *  A N A L Y S I S  S U M M A R Y  T A B L E  * * * *
+0 SEID  PEID PROJ VERS APRCH      SEMG SEMR SEKR SELG SELR MODES DYNRED SOLLIN PVALID SOLNL LOOPID DESIGN CYCLE SENSITIVITY
+ --------------------------------------------------------------------------------------------------------------------------
+     0     0    1    1 '        '    T    T    T    T    T     T      F      T      0     F     -1            0           F
+0SEID = SUPERELEMENT ID.
+ PEID = PRIMARY SUPERELEMENT ID OF IMAGE SUPERELEMENT.
+ PROJ = PROJECT ID NUMBER.
+ VERS = VERSION ID.
+ APRCH = BLANK FOR STRUCTURAL ANALYSIS.  HEAT FOR HEAT TRANSFER ANALYSIS.
+ SEMG = STIFFNESS AND MASS MATRIX GENERATION STEP.
+ SEMR = MASS MATRIX REDUCTION STEP (INCLUDES EIGENVALUE SOLUTION FOR MODES).
+ SEKR = STIFFNESS MATRIX REDUCTION STEP.
+ SELG = LOAD MATRIX GENERATION STEP.
+ SELR = LOAD MATRIX REDUCTION STEP. 
+ MODES = T (TRUE) IF NORMAL MODES OR BUCKLING MODES CALCULATED.
+ DYNRED = T (TRUE) MEANS GENERALIZED DYNAMIC AND/OR COMPONENT MODE REDUCTION PERFORMED.
+ SOLLIN = T (TRUE) IF LINEAR SOLUTION EXISTS IN DATABASE.
+ PVALID = P-DISTRIBUTION ID OF P-VALUE FOR P-ELEMENTS
+ LOOPID = THE LAST LOOPID VALUE USED IN THE NONLINEAR ANALYSIS.  USEFUL FOR RESTARTS.
+ SOLNL = T (TRUE) IF NONLINEAR SOLUTION EXISTS IN DATABASE.
+ DESIGN CYCLE = THE LAST DESIGN CYCLE (ONLY VALID IN OPTIMIZATION).
+ SENSITIVITY = SENSITIVITY MATRIX GENERATION FLAG.
+ 
+ No PARAM values were set in the Control File.
+ 
+1                                        * * * END OF JOB * * *
+ 
+ 
+ No Symbolic Replacement variables or values were specified.
+
