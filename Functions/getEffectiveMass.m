@@ -1,4 +1,5 @@
-function [E,MR, MRo,M,K] = getEffectiveMass(M,K,PHI, DOFint, DOF, PHIR )
+function [E,MR, MRo,M,K,dofA,dofO] = getEffectiveMass(M,K,PHI, DOFint, DOF, PHIR )
+
 % Effective Mass can be described here:
 %  https://ay16-17.moodle.wisc.edu/prod/pluginfile.php/171644/...
 %  mod_resource/content/1/Topic%2012.1%20-%20Selection%20of%20Target...
@@ -16,29 +17,32 @@ function [E,MR, MRo,M,K] = getEffectiveMass(M,K,PHI, DOFint, DOF, PHIR )
 
 nDOFint = length(DOFint); % # kept dof.
 nDOF = length(DOF); % # dof total.
-DOFIND = zeros(nDOFint,1); % INDEX OF ASET wrt M and K
+dofA = zeros(nDOFint,1); % INDEX OF ASET wrt M and K
 for i = 1:nDOFint
     [tmpind,~] = find(DOF==DOFint(i));
-    DOFIND(i) = tmpind;
+    dofA(i) = tmpind;
 end
-DOFCOMP = setxor(1:nDOF,DOFIND); % INDEX O SET DOF wrt M and K
-DOF = DOF([DOFIND;DOFCOMP],:); % ordered DOF list, [ASET;OSET]
-Moo = M(DOFCOMP,DOFCOMP);
+dofO = setxor(1:nDOF,dofA); % INDEX O SET DOF wrt M and K
+DOF = DOF([dofA;dofO],:); % ordered DOF list, [ASET;OSET]
+Moo = M(dofO,dofO);
 for i = 1:numel(PHI(1,:))
  mnorm(i) = 1/(sqrt(PHI(:,i)'*Moo*PHI(:,i)));
  PHI(:,i) = mnorm(i)*PHI(:,i);
 end
 % Moa = M(DOFind,DOFCOMP);
 % Mao = M(DOFCOMP,DOFind);
-% Maa = M(DOFCOMP,DOFCOMP);
-%M AND K PARTITIONED ACCORDING TO DOF 
-M = [ M(DOFIND,DOFIND), M(DOFIND,DOFCOMP); ...
-    M(DOFCOMP,DOFIND),M(DOFCOMP,DOFCOMP)];
-K = [ K(DOFIND,DOFIND), K(DOFIND,DOFCOMP); ...
-    K(DOFCOMP,DOFIND),K(DOFCOMP,DOFCOMP)];
+% Maa = M(DOFCOMP,DOFCOMP); `
 
-%Orthogonality Check
-surf(PHI'*Moo*PHI);
+%M AND K PARTITIONED ACCORDING TO DOF 
+M = [ M(dofA,dofA), M(dofA,dofO); ...
+    M(dofO,dofA),M(dofO,dofO)];
+K = [ K(dofA,dofA), K(dofA,dofO); ...
+    K(dofO,dofA),K(dofO,dofO)];
+
+%Orthogonality Check- turn on to see if PHI is orthogonal in a general
+%sense.
+% surf(PHI'*Moo*PHI);
+
 % OSET MASS WEIGHTED FIXED INTERFACE MODES ORTHOGONALITY CHECK.
 
 %Compute PHIro *** NOTE, this restricts rigid body modes from the first 6
@@ -46,8 +50,8 @@ surf(PHI'*Moo*PHI);
 
 % PHIr = [ eye(6); -inv(K(7:end,7:end))*K(7:end,1:6)];
 % PHIRo =  PHIR(nDOFint+1:end,:);
-PHIRo = PHIR(DOFCOMP,:);
-PHIR = PHIR([DOFIND; DOFCOMP],:);
+PHIRo = PHIR(dofO,:);
+PHIR = PHIR([dofA; dofO],:);
 MR = PHIR'*M*PHIR;
 MRo = PHIRo'*Moo*PHIRo; %Modal mass matrix contributing to o-set partition.
 
