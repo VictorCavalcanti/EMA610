@@ -1,4 +1,4 @@
-function [Efi,DOF,xtraDOF] = getEffectiveIndependence(PHI,M,K, ntargetdof,DOF)
+function [Efi,DOF,xtraDOF,detFish,kedetFish] = getEffectiveIndependence(PHI,M,K, ntargetdof,DOF)
 %Effective Independce can be explained here:
 %  https://ay16-17.moodle.wisc.edu/prod/pluginfile.php/171634/
 %  mod_resource/content/3/eCOWI_Resources/lecturepre/
@@ -19,7 +19,8 @@ function [Efi,DOF,xtraDOF] = getEffectiveIndependence(PHI,M,K, ntargetdof,DOF)
 %xtraDOF - DOF FOR HW3. SET OF nM+5 dof based solely on MKE.
 
 [n,nM] = size(PHI);
-iniset = 3*ntargetdof;
+iniset = 2*ntargetdof;
+% iniset = n;
 for i = 1:n
     for j = 1:nM
         KE(i,j) = PHI(i,j)*M(i,:)*PHI(:,j);
@@ -33,19 +34,28 @@ KEnorm = (1/nM)*sum(KE,2);
 xtraDOF = DOF(idx(1:ntargetdof));
 %DOF for only the initial candidate set of modes
 DOF = DOF(idx(1:iniset));
+PHIb = PHI;
 
 %Reduce our target modes to the initial set of DOF selected by Modal
 %Kinetic Energy
 PHI = PHI(idx(1:iniset),:);
-% k = 2*ntargetdof;
 k = iniset;
+detFish = zeros(iniset,1);
+kedetFish = zeros(iniset,1); %HW 3 only
+j = 0;
 while k > ntargetdof
+   
     
+    PHIKE = PHIb(idx(1:iniset-j),:);
+    B = PHIKE'*PHIKE;
+    kedetFish(iniset-k+1) = det(B); %HW 3 only
+    
+    
+    j = j+1;
     A = zeros(nM,nM);
     for i = 1:size(PHI,1)
         A = A+PHI(i,:)'*PHI(i,:);
     end
-%     A = PHI'*PHI;
     [V,D] = eig(A);
     [D, ascindx] = sort(diag(D),'ascend'); %Sort eigenvalues.
     V = V(:,ascindx); %sort eigenvectors accordingly.
@@ -54,13 +64,13 @@ while k > ntargetdof
     F = G*inv(diag(D));
     Efi = F*ones(nM,1);
     [Efi,index] = sort(Efi,'descend');
-%     disp(Efi);
 %Remove the lowest contributing dof from original DOF list and from PHI.
     DOF = DOF(index(1:end-1)); 
-%     disp(DOF);
     PHI = PHI(index(1:end-1),:);
-    
     k = k-1;
+    detFish(iniset-k+1) = det(A);
+    
+
 end
    
 end

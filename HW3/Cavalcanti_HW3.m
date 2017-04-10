@@ -77,7 +77,7 @@ KF = Ksort(13:end,13:end);
 %will identify your target modes. The final sensor location should have
 %n-target modes + 5 sensors.
 
-[Efi,EFIdof,KEdof] = getEffectiveIndependence(PHIK,MF,KF,numel(modindx)+5,dofO);
+[Efi,EFIdof,KEdof,efiDetQ,keDetQ] = getEffectiveIndependence(PHIK,MF,KF,numel(modindx)+5,dofO);
 
 
 %Use MAC and any other measure to determine which of the sensor sets
@@ -126,18 +126,58 @@ getStaticTAM(KF,MF,[1:138]',efiDOFind);
 % kewnhrz = sqrt(abs(diag(kewn)));
 % [kewnhrz, keascindx] = sort(kewnhrz,'ascend'); %Sort frequencies, ascend.
 % kePHI = kePHI(:,keascindx); %sort shapes based on freqs.
-PHImacefi = PHI(efiREDind,:);
-PHImacke = PHI(keREDind,:);
+PHImacefi = PHI(efiREDind,modindx);
+PHImacke = PHI(keREDind,modindx);
+
 %MAC
 efimac = mac(efiPHI,PHImacefi);
+% efimac = mac(efiPHI,efiPHI);
+set(gca, 'XTickLabel', modindx);
 title('Modal Assurance Criterion (MAC) between PHI_e_f_i and PHI');
 ylabel('PHI_e_f_i Mode #');
-xlabel('PHI Mode #');
+xlabel('Target Fixed-Interface Mode #');
+
 kemac = mac(kePHI,PHImacke);
+% kemac = mac(kePHI,kePHI);
+set(gca, 'XTickLabel', modindx);
 title('Modal Assurance Criterion (MAC) between PHI_k_e and PHI');
 ylabel('PHI_k_e Mode #');
-xlabel('PHI Mode #');
+xlabel('Target Fixed-Interface Mode #');
 
-%Cross and Self Orthogonalization
+%Cross and Self Orthogonality
+% [keCO] = corl8(kePHI,PHImacke,Mke);
+[Cke,~,~] = Kammercorl8(kePHI,Mke,PHImacke);
+set(gca, 'XTickLabel', modindx);
+title('Cross Orthogonality (CO) between PHI_k_e and PHI');
+ylabel('PHI_k_e Mode #');
+xlabel('Target Fixed-Interface Mode #');
+
+% [keSO] = corl8(kePHI,kePHI,Mke);
+[Sefi,~,~] = Kammercorl8(kePHI,Mke,kePHI);
+% set(gca, 'XTickLabel', modindx);
+title('Self Orthogonality (SO) for PHI_k_e');
+ylabel('PHI_k_e Mode #');
+xlabel('Target Fixed-Interface Mode #');
+
+% [efiCO] = corl8(efiPHI,PHImacefi,Mefi);
+[Cefi,p1,p2] = Kammercorl8(efiPHI,Mefi, PHImacefi);
+set(gca, 'XTickLabel', modindx);
+
+title('Cross Orthogonality (CO) between PHI_e_f_i and PHI');
+ylabel('PHI_e_f_i Mode #');
+xlabel('Target Fixed-Interface Mode #');
+
+% [efiSO] = corl8(efiPHI,efiPHI,Mefi);
+[Sefi,~,~] = Kammercorl8(efiPHI,Mefi, efiPHI);
+% set(gca, 'XTickLabel', modindx);
+title('Self Orthogonality (SO) for PHI_e_f_i');
+ylabel('PHI_e_f_i Mode #');
+xlabel('Target Fixed-Interface Mode #');
 
 %Frequency error
+efimodematching = [1,1; 2,3; 3,4; 4,6; 5,5; 6,8; 8,9; 10,12; 11,13; 13,18; 14,19; 15,21];
+% efimodematching = [1,1; 2,4; 3,3; 4,5; 5,6; 7,8; 10,9; 11,12; 12,13; 15,18; 16,19];
+eficompare = [w(efimodematching(:,2)) efiwnhz(efimodematching(:,1))];
+% kemodematching = [1,1; 2,3; 3,4; 4,5; 5,6; 6,8; 7,9; 8,12; 9,13; 10,18; 11,20];
+kemodematching = [1,1; 2,3; 3,4; 4,5; 5,6; 7,9; 11,12; 12,13; 14,18; 15,19;16,20;17,21; 18,22];
+kecompare = [w(kemodematching(:,2)) kewnhz(kemodematching(:,1))];
