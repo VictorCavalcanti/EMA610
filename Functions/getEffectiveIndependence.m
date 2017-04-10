@@ -19,7 +19,7 @@ function [Efi,DOF,xtraDOF] = getEffectiveIndependence(PHI,M,K, ntargetdof,DOF)
 %xtraDOF - DOF FOR HW3. SET OF nM+5 dof based solely on MKE.
 
 [n,nM] = size(PHI);
-
+iniset = 3*ntargetdof;
 for i = 1:n
     for j = 1:nM
         KE(i,j) = PHI(i,j)*M(i,:)*PHI(:,j);
@@ -30,20 +30,22 @@ KEnorm = (1/nM)*sum(KE,2);
 %idx is the index of the positions in the PHI vector of the sorted kinetic
 %energy by modes.
 [KEsort, idx] = sort(KEnorm,'descend');
-xtraDOF = DOF(idx(1:19));
-%DOF give the indexes of the original DOF list
-DOF = DOF(idx(1:2*ntargetdof));
+xtraDOF = DOF(idx(1:ntargetdof));
+%DOF for only the initial candidate set of modes
+DOF = DOF(idx(1:iniset));
 
 %Reduce our target modes to the initial set of DOF selected by Modal
 %Kinetic Energy
-PHI = PHI(idx(1:2*ntargetdof),:);
-k = 2*ntargetdof;
+PHI = PHI(idx(1:iniset),:);
+% k = 2*ntargetdof;
+k = iniset;
 while k > ntargetdof
     
     A = zeros(nM,nM);
     for i = 1:size(PHI,1)
         A = A+PHI(i,:)'*PHI(i,:);
     end
+%     A = PHI'*PHI;
     [V,D] = eig(A);
     [D, ascindx] = sort(diag(D),'ascend'); %Sort eigenvalues.
     V = V(:,ascindx); %sort eigenvectors accordingly.
@@ -52,8 +54,10 @@ while k > ntargetdof
     F = G*inv(diag(D));
     Efi = F*ones(nM,1);
     [Efi,index] = sort(Efi,'descend');
+%     disp(Efi);
 %Remove the lowest contributing dof from original DOF list and from PHI.
     DOF = DOF(index(1:end-1)); 
+%     disp(DOF);
     PHI = PHI(index(1:end-1),:);
     
     k = k-1;

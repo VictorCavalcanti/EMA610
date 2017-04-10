@@ -22,7 +22,7 @@ for i = 1:nDOFint
     [tmpind,~] = find(DOF==DOFint(i));
     dofA(i) = tmpind;
 end
-dofO = setxor(1:nDOF,dofA); % INDEX O SET DOF wrt M and K
+dofO = setxor(1:nDOF,dofA); % INDEX OSET DOF wrt M and K
 DOF = DOF([dofA;dofO],:); % ordered DOF list, [ASET;OSET]
 Moo = M(dofO,dofO);
 for i = 1:numel(PHI(1,:))

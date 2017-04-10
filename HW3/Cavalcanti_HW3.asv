@@ -95,11 +95,6 @@ for i = 1:numel(KEdof)
 end
 efiDOFind = efiDOFind';
 keDOFind = keDOFind';
-disp('The DOF set selected by EFI is:');
-disp(DOF1(EFIdof)');
-disp('The DOF set selected by KE is:');
-disp(DOF1(KEdof)');
-
 
 %% DEBUG ONLY
 % i = [ 130:135, 142:147]';
