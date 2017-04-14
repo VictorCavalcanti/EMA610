@@ -73,7 +73,7 @@ if nargout < 1;
     else
         figure
     end
-    ht = subplot(3,1,1:2)
+    ht = subplot(3,1,1:2);
     semilogy(ws/2/pi,abs(Xfft)); grid on;
     set(get(gca,'Children'),'LineWidth',2);
     title('FFT(x)');

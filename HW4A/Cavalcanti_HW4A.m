@@ -6,7 +6,7 @@ close all; clear all; clc;
 load('beam601.mat');
 %Decipher what L is: hrz? radians?
 l = diag(L);
-lhz = l./(2*pi);
+lhz = abs(l.^(.5))./(2*pi);
 
 TMODindx = 4:8; %Target mode indexes
 ASETindx = [1;13;17;29;41]; %Target accelerometer locations
@@ -38,4 +38,27 @@ title('Cross Orthogonality (CO) between PHI_m_o_d_a_l and PHI_t_e_s_t');
 ylabel('PHI_m_o_d_a_l Mode #');
 xlabel('Target Mode #');
 %%
+%GENERATE FREQUENCY RESPONSE FUNCTION FOR NODE 1 (DRIVE POINT), MAGNITUDE
+%AND PHASE ANGLE.
+%Sampling rate for taptest - 1024Hz.
+%https://ay16-17.moodle.wisc.edu/prod/pluginfile.php/171656/
+%mod_resource/content/5/eCOWI_Resources/lecturepre/
+%Topic%2013%20-%20Basics%20of%20Modal%20Testing%20Pres.pdf
+
 load('taptest.mat');
+
+ts = 1/1024;
+[Y1,w1] = fft_easy(a1,ts);
+[Y2,w2] = fft_easy(a2,ts);
+[Y3,w3] = fft_easy(a3,ts);
+
+[U1,wu2] = fft_easy(f1,ts);
+[U2,wu2] = fft_easy(f2,ts);
+[U3,wu2] = fft_easy(f3,ts);
+
+% fft_easy(a1(:,1),ts);
+% phs = angle(fftshift(Xfft));
+% figure;
+% hold on;
+% plot(phs,'r');
+% plot(angle(Xfft),'b');
