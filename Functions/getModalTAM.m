@@ -1,6 +1,7 @@
-function [K,M,DOFind,DOFCOMP,Ksort,Msort] = getStaticTAM(K,M,DOF,DOFred)
-%https://ay16-17.moodle.wisc.edu/prod/pluginfile.php/171622/mod_resource
-%/content/3/Topic%208%20-%20Static%20Reduction%20Pres.pdf
+function [K,M,DOFind,DOFCOMP,Ksort,Msort] = getModalTAM(K,M,DOF,DOFred,...
+PHI,PHIT)
+% https://ay16-17.moodle.wisc.edu/prod/pluginfile.php/171625/mod_resource
+%/content/2/Topic%209%20-%20Modal%20Reduction%20Pres.pdf
 
 %Performs a Static Reduction of a model. Returns the reduced K and M
 %matrices, the matrices are sorted in ascending node order.
@@ -9,6 +10,12 @@ function [K,M,DOFind,DOFCOMP,Ksort,Msort] = getStaticTAM(K,M,DOF,DOFred)
 % could also be a list of DOF indexes. Both DOF and DOFred need to have the
 % same format.
 % DOFred - List of DOF that should be kept.
+% PHI - Provide the modes used for reduction.
+% PHIT = index of target DOF.
+
+if nargin ~= 6 %If PHI not provided, compute it.
+    [PHI,~,~,~,sortindx] = getEigSort(K,M); 
+end
 
 nDOFred = length(DOFred); %# kept dof.
 nDOF = length(DOF); % # dof total.
@@ -23,7 +30,11 @@ Ksort = [K(DOFind,DOFind) K(DOFind,DOFCOMP);...
     K(DOFCOMP,DOFind) K(DOFCOMP, DOFCOMP)];
 Msort = [M(DOFind,DOFind) M(DOFind,DOFCOMP);...
     M(DOFCOMP,DOFind) M(DOFCOMP, DOFCOMP)];
-T = [eye(nDOFred); -inv(K(DOFCOMP,DOFCOMP))*K(DOFCOMP,DOFind)];
+
+%MODAL TAM
+PHITs = PHI(DOFCOMP,PHIT);
+PHITm = PHI(DOFind,PHIT);
+T = [eye(nDOFred); PHITs*inv(PHITm'*PHITm)*PHITm'];
 K = T'*Ksort*T;
 M = T'*Msort*T;
 

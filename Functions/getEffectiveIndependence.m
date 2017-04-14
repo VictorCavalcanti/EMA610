@@ -14,12 +14,12 @@ function [Efi,DOF,xtraDOF,detFish,kedetFish] = getEffectiveIndependence(PHI,M,K,
 %is 2x ntargetdof. It then iteratively removes dof by ranking via effective
 %independence until a set of target dof is chosen (with ntargetdof dof).
 
-
+format long;
 
 %xtraDOF - DOF FOR HW3. SET OF nM+5 dof based solely on MKE.
 
 [n,nM] = size(PHI);
-iniset = 2*ntargetdof;
+iniset = 3*ntargetdof;
 % iniset = n;
 for i = 1:n
     for j = 1:nM
@@ -40,22 +40,23 @@ PHIb = PHI;
 %Kinetic Energy
 PHI = PHI(idx(1:iniset),:);
 k = iniset;
-detFish = zeros(iniset,1);
-kedetFish = zeros(iniset,1); %HW 3 only
+detFish = zeros(iniset-ntargetdof,1);
+kedetFish = zeros(iniset-ntargetdof,1); %HW 3 only
 j = 0;
+figure; hold on;
 while k > ntargetdof
    
     
     PHIKE = PHIb(idx(1:iniset-j),:);
     B = PHIKE'*PHIKE;
     kedetFish(iniset-k+1) = det(B); %HW 3 only
-    
-    
     j = j+1;
-    A = zeros(nM,nM);
-    for i = 1:size(PHI,1)
-        A = A+PHI(i,:)'*PHI(i,:);
-    end
+
+    %     A = zeros(nM,nM);
+%     for i = 1:size(PHI,1)
+%         A = A+PHI(i,:)'*PHI(i,:);
+%     end
+    A = PHI'*PHI;
     [V,D] = eig(A);
     [D, ascindx] = sort(diag(D),'ascend'); %Sort eigenvalues.
     V = V(:,ascindx); %sort eigenvectors accordingly.
@@ -67,11 +68,14 @@ while k > ntargetdof
 %Remove the lowest contributing dof from original DOF list and from PHI.
     DOF = DOF(index(1:end-1)); 
     PHI = PHI(index(1:end-1),:);
-    k = k-1;
     detFish(iniset-k+1) = det(A);
-    
+    k = k-1;
 
 end
-   
+    plot(detFish,'bx-'); 
+    plot(kedetFish,'ro-');
+    xlabel('Iteration #');
+    ylabel('det(Q)');
+    legend('Q - efi' ,'Q- ke');
 end
 
