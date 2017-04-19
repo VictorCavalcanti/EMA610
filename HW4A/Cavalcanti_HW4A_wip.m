@@ -21,20 +21,20 @@ DOFindx = [1:numel(DOF)]'; %All dof indexes (original indexes)
 [COs,~,~] = Kammercorl8(PHIs,M(ASETindx,ASETindx), PHIT(ASETindx,:));
 %Plot bits
 set(gca, 'XTickLabel', TMODindx);
-title('Cross Orthogonality (CO) between PHI_s_t_a_t_i_c and PHI_t_e_s_t');
+title('Cross Orthogonality (CO) between PHI_s_t_a_t_i_c and PHI_F_E_M');
 ylabel('PHI_s_t_a_t_i_c Mode #');
 xlabel('Target Mode #');
 
 %%
 %MODAL TAM
-[Km,Mm,DOFindm,DOFCOMPm,Ksortm,Msortm] = getModalTAM(K,M,DOFindx,ASETindx,...
+[Km,Mm,DOFindm,DOFCOMPm,Ksortm,Msortm,Tmod] = getModalTAM(K,M,DOFindx,ASETindx,...
     PHI,TMODindx);
 %Solve eigenvalue problem and sort modes ascending.
 [PHIm,mD,mwn,mwnhz,msortindx] = getEigSort(Km,Mm);
 %Plot bits
 [COm,~,~] = Kammercorl8(PHIm,M(ASETindx,ASETindx), PHIT(ASETindx,:));
 set(gca, 'XTickLabel', TMODindx);
-title('Cross Orthogonality (CO) between PHI_m_o_d_a_l and PHI_t_e_s_t');
+title('Cross Orthogonality (CO) between PHI_m_o_d_a_l and PHI_F_E_M');
 ylabel('PHI_m_o_d_a_l Mode #');
 xlabel('Target Mode #');
 %%
@@ -89,9 +89,60 @@ for j=1:nt                         % loop over data points
 end
 w = w./(2*pi); %fft easy returns frequencies in radians.
 figure;
-subplot(2,1,1); 
-plot(w,angle(g(1,:))); hold on;
-plot(w,imag(g(1,:)),'r');
-subplot(2,1,2);
-plot(w,real(g(1,:))); hold on;
-plot(w,abs(g(1,:)),'r');
+% subplot(2,1,1); 
+hold on;
+plot(w,(360/pi)*angle(g(1,:)),'LineWidth',1.5);
+plot(w,(360/pi)*angle(g(2,:)),'r','LineWidth',1.5);
+% plot(w,(360/pi)*angle(g(3,:)),'k');
+% plot(w,(360/pi)*angle(g(4,:)),'c');
+% plot(w,(360/pi)*angle(g(5,:)),'y');
+
+title('Phase Angle');
+ylabel('Angle (Degrees)');
+xlabel('Frequency (Hz)');
+grid on;
+
+figure; 
+% subplot(2,1,2);
+
+% plot(w,real(g(1,:))); 
+% Inertance: A/F
+semilogy(w,abs(g(1,:)),'LineWidth',1.5); hold on;
+semilogy(w,abs(g(2,:)),'r','LineWidth',1.5);
+% semilogy(w,abs(g(3,:)),'k');
+% semilogy(w,abs(g(4,:)),'c');
+% semilogy(w,abs(g(4,:)),'c');
+title('Inertance vs Frequency');
+ylabel('Magnitude of Inertance');
+xlabel('Frequency (Hz)');
+
+grid on;
+
+%Compliance: X/F
+h = g./repmat(w,1,5)';
+figure; 
+semilogy(w,abs(h(1,:)),'LineWidth',1.5); hold on;
+semilogy(w,abs(h(2,:)),'r','LineWidth',1.5);
+% semilogy(w,abs(h(3,:)),'k');
+% semilogy(w,abs(h(4,:)),'c');
+grid on;
+title('Compliance vs Frequency');
+ylabel('Magnitude of Compliance');
+xlabel('Frequency (Hz)');
+
+%Extract Mode Shapes
+mindx = [ 19, 32, 48, 68, 92];
+phic = g(:,mindx);
+%Realize modes according to:
+%   https://sem.org/wp-content/uploads/2016/07/
+%   sem.org-IMAC-XI-11th-Int-11-39-6-Realization-Complex-Mode-Shapes.pdf
+% Equation 2.
+phir = real(phic)+imag(phic)*inv(real(phic).'*real(phic))*real(phic).'*imag(phic);
+
+phirFull = Tmod*phir;
+[TAMTESTCO,~,~] = Kammercorl8(PHIm,M(ASETindx,ASETindx), phir);
+%Plot bits
+set(gca, 'XTickLabel', TMODindx);
+title('Cross Orthogonality (CO) between PHI_T_A_M and PHI_t_e_s_t');
+ylabel('PHI_s_t_a_t_i_c Mode #');
+xlabel('Target Mode #');
