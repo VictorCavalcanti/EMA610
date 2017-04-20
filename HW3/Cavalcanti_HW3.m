@@ -54,7 +54,7 @@ disp(Esum);
 %Selects all modes that contribute to more than 4.65% of mass in any rigid
 %body direction. The assignment specifies 5%, however Dr. Kammer suggested
 %"Things close to 5% RBM".
-I = find(E>=0.047); 
+I = find(E>=0.048); 
 modindx = sort(mod(I,numel(E(:,1))),'ascend');
 modindx = unique(modindx);
 masscmplt = sum(E(modindx,:));
@@ -95,11 +95,11 @@ for i = 1:numel(KEdof)
 end
 efiDOFind = efiDOFind';
 keDOFind = keDOFind';
-disp('The DOF set selected by EFI is:');
+disp('The DOF set selected by EFI are:');
 disp(DOF1(EFIdof)');
-disp('The DOF set selected by KE is:');
+disp('The DOF set selected by KE are:');
 disp(DOF1(KEdof)');
-
+grid on;
 
 %% DEBUG ONLY
 % i = [ 130:135, 142:147]';
@@ -116,33 +116,29 @@ getStaticTAM(KF,MF,[1:138]',efiDOFind);
 %Eigenproblem for EFIdof and KEdof.
 [efiPHI,efiD,efiwn,efiwnhz,efisortindx] = getEigSort(Kefi,Mefi);
 [kePHI,keD,kewn,kewnhz,kesortindx] = getEigSort(Kke,Mke);
-
-% [efiPHI,efiwn] = eig(Kefi,Mefi);
-% efiwnhrz = sqrt(abs(diag(efiwn)));
-% [efiwnhrz, efiascindx] = sort(efiwnhrz,'ascend'); %Sort frequencies, ascend.
-% efiPHI = efiPHI(:,efiascindx); %sort shapes based on freqs.
-% 
-% [kePHI,kewn] = eig(Kke,Mke);
-% kewnhrz = sqrt(abs(diag(kewn)));
-% [kewnhrz, keascindx] = sort(kewnhrz,'ascend'); %Sort frequencies, ascend.
-% kePHI = kePHI(:,keascindx); %sort shapes based on freqs.
 PHImacefi = PHI(efiREDind,modindx);
 PHImacke = PHI(keREDind,modindx);
 
 %MAC
 efimac = mac(efiPHI,PHImacefi);
-% efimac = mac(efiPHI,efiPHI);
 set(gca, 'XTickLabel', modindx);
 title('Modal Assurance Criterion (MAC) between PHI_e_f_i and PHI');
-ylabel('PHI_e_f_i Mode #');
 xlabel('Target Fixed-Interface Mode #');
 
+efiSmac = mac(efiPHI,efiPHI);
+title('Self - Modal Assurance Criterion (MAC) for PHI_e_f_i');
+ylabel('PHI_e_f_i Mode #');
+xlabel('PHI_e_f_i Mode #');
+
 kemac = mac(kePHI,PHImacke);
-% kemac = mac(kePHI,kePHI);
 set(gca, 'XTickLabel', modindx);
 title('Modal Assurance Criterion (MAC) between PHI_k_e and PHI');
-ylabel('PHI_k_e Mode #');
 xlabel('Target Fixed-Interface Mode #');
+
+keSmac = mac(kePHI,kePHI);
+title('Self - Modal Assurance Criterion (MAC) for PHI_k_e');
+ylabel('PHI_k_e Mode #');
+xlabel('PHI_k_e Mode #');
 
 %Cross and Self Orthogonality
 % [keCO] = corl8(kePHI,PHImacke,Mke);
@@ -175,9 +171,11 @@ ylabel('PHI_e_f_i Mode #');
 xlabel('Target Fixed-Interface Mode #');
 
 %Frequency error
-efimodematching = [1,1; 2,3; 3,4; 4,6; 5,5; 6,8; 8,9; 10,12; 11,13; 13,18; 14,19; 15,21];
-% efimodematching = [1,1; 2,4; 3,3; 4,5; 5,6; 7,8; 10,9; 11,12; 12,13; 15,18; 16,19];
+% efimodematching = [1,1; 2,4; 3,3; 4,5; 5,6; 7,8; 10,9; 11,12; 12,13; 15,18; 16,19]; %FULL SET
+kemodematching = [1,1; 2,3; 3,4; 4,5; 5,6; 7,8; 8,9; 11,12; 12,13; 14,18; 15,19; 16,20; 17,21; 18,22]; %FULL SET (REDUCED IS THE SAME)
+
+efimodematching = [1,1; 2,3; 3,4; 4,6; 5,5; 6,8; 8,9; 10,12; 11,13; 13,18; 14,19; 15,21]; %REDUCED BEGINING SET
+
+% kemodematching = [1,1; 2,3; 3,4; 4,5; 5,6; 7,9; 11,12; 12,13; 14,18; 15,19;16,20;17,21; 18,22];
 eficompare = [w(efimodematching(:,2)) efiwnhz(efimodematching(:,1))];
-% kemodematching = [1,1; 2,3; 3,4; 4,5; 5,6; 6,8; 7,9; 8,12; 9,13; 10,18; 11,20];
-kemodematching = [1,1; 2,3; 3,4; 4,5; 5,6; 7,9; 11,12; 12,13; 14,18; 15,19;16,20;17,21; 18,22];
 kecompare = [w(kemodematching(:,2)) kewnhz(kemodematching(:,1))];

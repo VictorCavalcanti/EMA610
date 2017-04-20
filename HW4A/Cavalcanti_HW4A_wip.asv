@@ -137,21 +137,14 @@ phic = g(:,mindx);
 %   https://sem.org/wp-content/uploads/2016/07/
 %   sem.org-IMAC-XI-11th-Int-11-39-6-Realization-Complex-Mode-Shapes.pdf
 % Equation 2.
-PHIt = real(phic)+imag(phic)*inv(real(phic).'*real(phic))*real(phic).'*imag(phic);
-%Expand the test modes to full DOF size. (using modal transformation used in part 1)
-phirFull = Tmod*PHIt;
-%Cross-Orthogonality
-[TAMTESTCO,~,~] = Kammercorl8(PHIm,M(ASETindx,ASETindx), PHIt);
+phir = real(phic)+imag(phic)*inv(real(phic).'*real(phic))*real(phic).'*imag(phic);
+
+phirFull = Tmod*phir;
+[TAMTESTCO,~,~] = Kammercorl8(PHIm,M(ASETindx,ASETindx), phir);
 %Plot bits
 set(gca, 'XTickLabel', TMODindx);
+set(gca, 'YTickLabel', mindx);
+
 title('Cross Orthogonality (CO) between PHI_T_A_M and PHI_t_e_s_t');
 ylabel('TAM Mode #');
 xlabel('Target Mode #');
-%%
-% WORK ON THE LABELS! OTHERWISE WRITE UP WORK.
-%%
-%MAC
-mac = mac(PHIm,PHIt);
-title('Self - Modal Assurance Criterion (MAC) for PHI_k_e');
-ylabel('PHI_k_e Mode #');
-xlabel('PHI_k_e Mode #');
