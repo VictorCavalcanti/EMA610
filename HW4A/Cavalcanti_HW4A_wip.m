@@ -1,4 +1,5 @@
-close all; clear all; clc;
+% close all;
+clear all; clc;
 %Victor Cavalcanti
 %EMA610 - HW4A
 %%
@@ -7,7 +8,6 @@ load('beam601.mat');
 %Decipher what L is: hrz? radians?
 l = diag(L);
 lhz = abs(l.^(.5))./(2*pi);
-
 TMODindx = 4:8; %Target mode indexes
 ASETindx = [1;13;17;29;41]; %Target accelerometer locations
 PHIT = PHI(:,TMODindx); %Target modes.
@@ -49,17 +49,18 @@ load('taptest.mat');
 
 ts = 1/1024;
 ntest = 3;
-nt = 257;
+nt = 513;
 
-y = zeros(size(a1,1),size(a1,2),ntest);
-f = zeros(size(f1,1),size(f1,2),ntest);
-
-y(:,:,1) = a1;
-y(:,:,2) = a2;
-y(:,:,3) = a3;
-f(:,:,1) = f1;
-f(:,:,2) = f2;
-f(:,:,3) = f3;
+% y = zeros(size(a1,1)+,size(a1,2),ntest);
+% f = zeros(size(f1,1),size(f1,2),ntest);
+y = zeros(1024,5,3);
+f = zeros(1024,1,3);
+y(:,:,1) = [a1; zeros(512,5)];
+y(:,:,2) = [a2; zeros(512,5)];
+y(:,:,3) = [a3; zeros(512,5)];
+f(:,:,1) = [f1; zeros(512,1)];
+f(:,:,2) = [f2; zeros(512,1)];
+f(:,:,3) = [f3; zeros(512,1)];
 
 ns = size(y,2);
 na = size(f,2);
@@ -88,50 +89,81 @@ for j=1:nt                         % loop over data points
   inv(Pxx(:,(j-1)*na+ia));         % build frf matrix
 end
 w = w./(2*pi); %fft easy returns frequencies in radians.
+
+%Extract Mode Shapes
+mindx = [ 19, 32, 48, 68, 92];
+
 figure;
 % subplot(2,1,1); 
 hold on;
+subplot(3,1,1); hold on;
 plot(w,(360/pi)*angle(g(1,:)),'LineWidth',1.5);
-plot(w,(360/pi)*angle(g(2,:)),'r','LineWidth',1.5);
+% plot(w,(360/pi)*angle(g(2,:)),'r','LineWidth',1.5);
+ylim([-360 360]);
+xlim([0 512]);
+ystart = -360*ones(1,5);
+yend = 360*ones(1,5);
+for idx = 1 : numel(ystart)
+    plot([2.*mindx(idx) 2.*mindx(idx)], [ystart(idx) yend(idx)],...
+        'k--','Linewidth',1.25);
+end
 % plot(w,(360/pi)*angle(g(3,:)),'k');
 % plot(w,(360/pi)*angle(g(4,:)),'c');
 % plot(w,(360/pi)*angle(g(5,:)),'y');
 
-title('Phase Angle');
+title('Phase Angle of drive point FRF');
 ylabel('Angle (Degrees)');
 xlabel('Frequency (Hz)');
-grid on;
+% grid on;
 
-figure; 
-% subplot(2,1,2);
+% figure; 
+subplot(3,1,2);
 
 % plot(w,real(g(1,:))); 
 % Inertance: A/F
 semilogy(w,abs(g(1,:)),'LineWidth',1.5); hold on;
-semilogy(w,abs(g(2,:)),'r','LineWidth',1.5);
+% semilogy(w,abs(g(2,:)),'r','LineWidth',1.5);
+% axis([0 512 -s s ]);
+xlim([0 512]);
+% ystart = -s.*ones(1,5);
+ystart = 0.01.*ones(1,5);
+yend = 100.*ones(1,5);
+for idx = 1 : numel(ystart)
+    plot([2.*mindx(idx) 2.*mindx(idx)], [ystart(idx) yend(idx)],...
+        'k--','Linewidth',1.25);
+end
 % semilogy(w,abs(g(3,:)),'k');
 % semilogy(w,abs(g(4,:)),'c');
 % semilogy(w,abs(g(4,:)),'c');
-title('Inertance vs Frequency');
+title('Inertance vs Frequency of drive point FRF');
 ylabel('Magnitude of Inertance');
 xlabel('Frequency (Hz)');
 
-grid on;
+% grid on;
 
 %Compliance: X/F
 h = g./repmat(w,1,5)';
-figure; 
+% figure; 
+subplot(3,1,3); 
+
 semilogy(w,abs(h(1,:)),'LineWidth',1.5); hold on;
-semilogy(w,abs(h(2,:)),'r','LineWidth',1.5);
+% semilogy(w,abs(h(2,:)),'r','LineWidth',1.5);
+xlim([0 512]);
+
+ystart = 0.0001.*ones(1,5);
+yend = 10.*ones(1,5);
+for idx = 1 : numel(ystart)
+    plot([2.*mindx(idx) 2.*mindx(idx)], [ystart(idx) yend(idx)],...
+        'k--','Linewidth',1.25);
+end
 % semilogy(w,abs(h(3,:)),'k');
 % semilogy(w,abs(h(4,:)),'c');
-grid on;
-title('Compliance vs Frequency');
+% grid on;
+title('Compliance vs Frequency of drive point FRF');
 ylabel('Magnitude of Compliance');
 xlabel('Frequency (Hz)');
 
-%Extract Mode Shapes
-mindx = [ 19, 32, 48, 68, 92];
+
 phic = g(:,mindx);
 %Realize modes according to:
 %   https://sem.org/wp-content/uploads/2016/07/
@@ -139,19 +171,27 @@ phic = g(:,mindx);
 % Equation 2.
 PHIt = real(phic)+imag(phic)*inv(real(phic).'*real(phic))*real(phic).'*imag(phic);
 %Expand the test modes to full DOF size. (using modal transformation used in part 1)
-phirFull = Tmod*PHIt;
+PHIrFull = Tmod*PHIt;
+
 %Cross-Orthogonality
 [TAMTESTCO,~,~] = Kammercorl8(PHIm,M(ASETindx,ASETindx), PHIt);
 %Plot bits
 set(gca, 'XTickLabel', TMODindx);
-title('Cross Orthogonality (CO) between PHI_T_A_M and PHI_t_e_s_t');
+title('Cross Orthogonality (CO) between PHI_T_A_M and PHI_T_E_S_T');
 ylabel('TAM Mode #');
 xlabel('Target Mode #');
-%%
-% WORK ON THE LABELS! OTHERWISE WRITE UP WORK.
-%%
 %MAC
 mac = mac(PHIm,PHIt);
-title('Self - Modal Assurance Criterion (MAC) for PHI_k_e');
-ylabel('PHI_k_e Mode #');
-xlabel('PHI_k_e Mode #');
+title('Cross - MAC for PHI_T_A_M vs PHI_T_E_S_T');
+ylabel('TAM Mode #');
+xlabel('TEST Mode #');
+
+%COMPARE FEM/TEST TARGET MODE CORRELATION
+[FEMTESTCO,~,~] = Kammercorl8(PHI([ASETindx ;DOFCOMPm],TMODindx),Msortm,PHIrFull );
+%Plot bits
+set(gca, 'XTickLabel', TMODindx);
+set(gca, 'YTickLabel', TMODindx);
+title('Cross Orthogonality (CO) between PHI_F_E_M and PHI_T_E_S_T');
+ylabel('FEM Mode #');
+xlabel('TEST Mode #');
+ylim([0.5, 5+0.5]);
