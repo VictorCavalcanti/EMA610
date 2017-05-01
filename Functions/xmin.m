@@ -1,0 +1,64 @@
+function [dD,Jval]=xmin(deps,We,Wd,eps0,alpha2,DL,DU)
+%
+%   Created by:     D. Kammer
+%                   Dept of Engineering Physics
+%                   University of Wisconsin
+%                   Madison, WI  53706
+%
+%  Defines the cost function for  updating and calls fmincon to
+%  determine update dD which minimizes it
+%
+%  Note that this is only a template.  You must modify it to fit your
+%  problem
+%  ===========================================================
+%
+%  HISTORY
+%  =======
+%
+%
+%  ===========================================================
+%
+%  INPUT
+%  =====
+%  deps = depsilon/dD 
+%
+%  We, Wd = Weighting matrices in cost function
+%
+%  eps0 = Initial error vector
+%
+%  alpha2 = Penalty number in cost function
+%
+%  DL = Lower bounds on dimensionless design variables
+%
+%  DU = Upper bounds on dimensionless design variables
+%
+%
+%  OUTPUT
+%  ======
+%  dD = Update to dimensionless design variables which minimizes J
+%
+%  Jval = Minimized value of J
+%
+%  Use:  [dD,Jval]=xmin(deps,We,Wd,eps0,alpha2,DL,DU);
+%
+%==============================================================
+
+    [ns,nvars,nf]=size(deps);               % number of sensors, number of design vars
+    options=optimset('GradObj','on');       % tell optimizer that I'm giving it the gradient
+  
+% Call "fmincon"
+%
+%                find state variable update dD by minimizing J
+
+    [dD,Jval]=fmincon(@xcost,zeros(nvars,1),[],[],[],[],DL,DU,[],options);
+
+    function [J,dJ]=xcost(dD);
+        
+        %  Calculates value of J and dJ
+        %  ---------------------------
+                
+        J = alpha2*(dD)'*Wd*(delt+dD) + other terms;             %  terms in J
+        dJ = 2*alpha2*Wd*(dD) + other terms;                     %  terms in dJ
+        
+    end
+end
