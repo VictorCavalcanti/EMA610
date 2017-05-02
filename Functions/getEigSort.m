@@ -10,7 +10,15 @@ D = diag(D);
 wn = sqrt(abs(D));
 [wn, sortindx] = sort(wn,'ascend'); %Sort frequencies, ascend.
 PHI = PHI(:,sortindx); %sort shapes based on freqs.
-D = diag(D(sortindx));
+%Mass Normalize Modes
+g = PHI'*M*PHI;
+g = diag(g);
+g = g.^(-1/2);
+g=diag(g);
+PHI = PHI*g;
+%
+
+D = D(sortindx);
 wnfreq = wn./(2*pi);
 
 end

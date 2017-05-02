@@ -194,3 +194,47 @@ title('Cross Orthogonality (CO) between PHI_F_E_M and PHI_T_E_S_T');
 ylabel('FEM Mode #');
 xlabel('TEST Mode #');
 ylim([0.5, 5+0.5]);
+
+[~,plotidx] = sort([ASETindx; DOFCOMPm],'ascend');
+
+% figure; 
+% subplot(5,1,1); 
+% plot(PHI(:,4),'r','LineWidth',1.5); hold on;
+% plot(5.*PHIrFull(plotidx,1),'b','LineWidth',1.5);
+% 
+% subplot(5,1,2); 
+% plot(PHI(:,5),'r','LineWidth',1.5); hold on;
+% plot(-5.*PHIrFull(plotidx,2),'b','LineWidth',1.5);
+% 
+% subplot(5,1,3); 
+% plot(PHI(:,6),'r','LineWidth',1.5); hold on;
+% plot(-2.*PHIrFull(plotidx,3),'b','LineWidth',1.5);
+% 
+% subplot(5,1,4); 
+% plot(PHI(:,7),'r','LineWidth',1.5); hold on;
+% plot(2.*PHIrFull(plotidx,4),'b','LineWidth',1.5);
+% 
+% subplot(5,1,5); 
+% plot(PHI(:,8),'r','LineWidth',1.5); hold on;
+% plot(-5.*PHIrFull(plotidx,5),'b','LineWidth',1.5);
+
+figure; 
+subplot(4,1,1); 
+plot(PHI(:,8),'r','LineWidth',1.5); hold on;
+plot(-2.*PHIrFull(plotidx,4),'b','LineWidth',1.5);
+title('FEM mode 5 & Test Mode 4');
+subplot(4,1,2); 
+plot(PHI(:,6),'r','LineWidth',1.5); hold on;
+plot(-5.*PHIrFull(plotidx,2),'b','LineWidth',1.5);
+title('FEM mode 6 & Test Mode 5');
+subplot(4,1,3); 
+plot(PHI(:,7),'r','LineWidth',1.5); hold on;
+plot(2.*PHIrFull(plotidx,3),'b','LineWidth',1.5);
+title('FEM mode 7 & Test Mode 6');
+
+subplot(4,1,4); 
+plot(PHI(:,8),'r','LineWidth',1.5); hold on;
+plot(-2.*PHIrFull(plotidx,4),'b','LineWidth',1.5);
+title('FEM mode 8 & Test Mode 7');
+
+legend('FEM Mode', 'Test Mode');

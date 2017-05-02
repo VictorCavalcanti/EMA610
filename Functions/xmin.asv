@@ -52,14 +52,13 @@ function [dD,Jval]=xmin(deps,We,Wd,eps0,alpha2,DL,DU)
 
     [dD,Jval]=fmincon(@xcost,zeros(nvars,1),[],[],[],[],DL,DU,[],options);
 
-    function [J,dJ]=xcost(dD)
+    function [J,dJ]=xcost(dD);
         
         %  Calculates value of J and dJ
         %  ---------------------------
         
 %         J = alpha2*(dD)'*Wd*(delt+dD) + other terms;             %  terms in J
 %         dJ = 2*alpha2*Wd*(dD) + other terms;                     %  terms in dJ
-        J = eps0'*We*eps0+eps0'*We*deps*dD+dD'*deps'*We*eps0+dD'*deps'*We*deps*dD+alpha2.*dD'*Wd*dD;
-        dJ = 2*deps'*We*eps0+2*(deps'*We*deps+alpha2.*Wd)*dD;
+        J = eps0'*A*eps0
     end
 end
